@@ -21,6 +21,7 @@ function App() {
   const [reloadBreak, setReloadBreak] = useState(false);
   const [check, setCheck] = useState(false);
   const [allData, setAllData] = useState(userData());
+  const audio = new Audio('aud1.mp3');
 
   function reset() {
     window.location.reload();
@@ -52,11 +53,15 @@ function App() {
       clearInterval(int);
 
       //play beep sound
-      document.getElementById("beep").play();
+      // audio.play();
 
       //this is for the alerting the user
       if (!reloadBreak) {
-        alert("session done start break time");
+        audio.play();
+        setTimeout(() => {
+          alert("session done start break time")
+        }, 100);
+        
       }
 
       //setSeconds=0,because new breaklength came as session length and it will count form starting
@@ -73,15 +78,23 @@ function App() {
 
     //it run if break and session length both will complete
     if (reloadBreak && minutes == -1) {
-      document.getElementById("beep").play();
       clearInterval(int);
-      alert(
-        "this session done completely if you want to set another session then start again"
-      );
-      const dateEl = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+      audio.play();
+      setTimeout(() => {
+        alert("this session done completely if you want to set another session then start again")
+      }, 100);
+      const dateEl = new Date().toLocaleString(navigator.language);    
       setAllData(prev => [...prev, dateEl]);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 110);
     }
+
+    return ()=>{
+      audio.currentTime=0;
+    };
+
+
   }, [minutes, int, BreakLength, reloadBreak, seconds]);
 
 
@@ -94,7 +107,7 @@ function App() {
   //this is for update seconds and minutes according to condition
   useEffect(() => {
     if (seconds === 0 && check) {
-      setSeconds(60);
+      setSeconds(6);
       setMinutes((prev) => prev - 1);
     }
   }, [seconds, check]);
@@ -188,10 +201,10 @@ function App() {
             className="text-2xl sm:text-4xl m-5 fa-solid fa-rotate-right"
           ></i>
 
-          <audio
+          {/* <audio
             id="beep"
             src="aud1.mp3"
-          ></audio>
+          ></audio> */}
         </div>
       </div>
 
