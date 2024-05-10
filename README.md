@@ -1,3 +1,4 @@
 # Pomodoro Clock 
 
-hosted link - <a href="https://frg-25clock.netlify.app" target="blank">
+<h3>hosted link- </h3>
+<a href="https://frg-25clock.netlify.app" target="blank">https://frg-25clock.netlify.app</a>
