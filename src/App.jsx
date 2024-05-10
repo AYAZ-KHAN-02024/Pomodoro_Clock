@@ -20,7 +20,6 @@ function App() {
   const [handleBreak, setHandleBreak] = useState(false);
   const [reloadBreak, setReloadBreak] = useState(false);
   const [check, setCheck] = useState(false);
-  const alarmSound = document.getElementById("beep");
   const [allData, setAllData] = useState(userData());
 
   function reset() {
@@ -53,7 +52,7 @@ function App() {
       clearInterval(int);
 
       //play beep sound
-      alarmSound.play();
+      document.getElementById("beep").play();
 
       //this is for the alerting the user
       if (!reloadBreak) {
@@ -74,8 +73,8 @@ function App() {
 
     //it run if break and session length both will complete
     if (reloadBreak && minutes == -1) {
+      document.getElementById("beep").play();
       clearInterval(int);
-      alarmSound.play();
       alert(
         "this session done completely if you want to set another session then start again"
       );
@@ -83,7 +82,7 @@ function App() {
       setAllData(prev => [...prev, dateEl]);
       window.location.reload();
     }
-  }, [minutes, int, BreakLength, reloadBreak, seconds, alarmSound]);
+  }, [minutes, int, BreakLength, reloadBreak, seconds]);
 
 
 
@@ -191,7 +190,7 @@ function App() {
 
           <audio
             id="beep"
-            src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+            src="aud1.mp3"
           ></audio>
         </div>
       </div>
