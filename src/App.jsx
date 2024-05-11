@@ -23,6 +23,8 @@ function App() {
   const [allData, setAllData] = useState(userData());
   const audio = new Audio('aud1.mp3');
   const audio2 = new Audio('aud4.mp3');
+  const [ok,setOk]=useState(true);
+  const [execute,setExecute]=useState(false);
 
   function reset() {
     window.location.reload();
@@ -60,7 +62,7 @@ function App() {
       if (!reloadBreak) {
         audio.play();
         setTimeout(() => {
-          alert("session done start break time")
+          alert("session done click on play button for starting break time")
         }, 100);
         
       }
@@ -80,23 +82,24 @@ function App() {
     //it run if break and session length both will complete
     if (reloadBreak && minutes == -1) {
       clearInterval(int);
-      audio2.play();
-      setTimeout(() => {
-        alert("this session done completely if you want to set another session then start again")
-      }, 300);
+      setOk(false);
+      if(!ok){audio2.play()};
+
+      if(!execute){
       const dateEl = new Date().toLocaleString(navigator.language);    
       setAllData(prev => [...prev, dateEl]);
-      setTimeout(() => {
-        window.location.reload();
-      }, 400);
+      setExecute(true);
+      }
+
+      if(ok=='hide'){ window.location.reload()}
     }
 
     return ()=>{
       audio.currentTime=0;
+      audio2.currentTime=0;
     };
 
-
-  }, [minutes, int, BreakLength, reloadBreak, seconds]);
+  }, [minutes, int, BreakLength, reloadBreak, seconds,ok]);
 
 
 
@@ -108,7 +111,7 @@ function App() {
   //this is for update seconds and minutes according to condition
   useEffect(() => {
     if (seconds === 0 && check) {
-      setSeconds(60);
+      setSeconds(5);
       setMinutes((prev) => prev - 1);
     }
   }, [seconds, check]);
@@ -145,8 +148,17 @@ function App() {
         <a href="https://www.linkedin.com/in/ayaz-khan-8750o" className="text-sky-400" target="_blank">• LinkedIn Profile</a>
       </div>
 
+       
+       {/* custom alert  */}
+       { (!ok) && 
+        <div className="fixed z-20 inset-0 w-fit h-fit flex justify-center items-center flex-col align-middle bg-blue-400 text-slate-800 p-5 rounded-md m-auto ">
+          <h2 className=" text-xl">this session done if you want to set another session then click 'ok'!</h2> 
+         <button onClick={()=>setOk('hide')} className=" bg-black text-white rounded-md p-4">OK</button>
+       </div>
+       }
 
-      <div className="w-fit mt-4 text-base sm:text-2xl bg-blue-900 p-5 rounded-xl shadow-lg shadow-black m-auto ">
+
+      <div className={`w-fit mt-4 text-base sm:text-2xl ${!ok? "filter blur-md" :"bg-blue-900"} p-5 rounded-xl shadow-lg shadow-black m-auto`}>
         <h1 className="p-4 text-red-400 rounded-md bg-black font-bold text-center mb-8">
           25 + 5 Clock (Pomodoro clock)
         </h1>
