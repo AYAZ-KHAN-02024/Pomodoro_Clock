@@ -22,6 +22,7 @@ function App() {
   const [check, setCheck] = useState(false);
   const [allData, setAllData] = useState(userData());
   const audio = new Audio('aud1.mp3');
+  const audio2 = new Audio('aud4.mp3');
 
   function reset() {
     window.location.reload();
@@ -79,15 +80,15 @@ function App() {
     //it run if break and session length both will complete
     if (reloadBreak && minutes == -1) {
       clearInterval(int);
-      audio.play();
+      audio2.play();
       setTimeout(() => {
         alert("this session done completely if you want to set another session then start again")
-      }, 100);
+      }, 300);
       const dateEl = new Date().toLocaleString(navigator.language);    
       setAllData(prev => [...prev, dateEl]);
       setTimeout(() => {
         window.location.reload();
-      }, 110);
+      }, 400);
     }
 
     return ()=>{
