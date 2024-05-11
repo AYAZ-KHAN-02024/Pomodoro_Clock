@@ -111,7 +111,7 @@ function App() {
   //this is for update seconds and minutes according to condition
   useEffect(() => {
     if (seconds === 0 && check) {
-      setSeconds(5);
+      setSeconds(60);
       setMinutes((prev) => prev - 1);
     }
   }, [seconds, check]);
